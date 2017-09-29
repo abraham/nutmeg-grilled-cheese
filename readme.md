@@ -1,6 +1,8 @@
 &lt;grilled-cheese&gt;
 ====
 
+This [demo](https://codepen.io/abrahamwilliams/pen/rGwrvr) Web Component was generated with `nutmeg new grilled-cheese cheese:string[] pickles:boolean quantity:number` followed by a [minimal amount](https://github.com/abraham/nutmeg-grilled-cheese/commit/375dfb0629526cfec6ecddd27e2cf14b33b5a191) of feature and test changes.
+
 Install
 ----
 
