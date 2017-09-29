@@ -15,21 +15,25 @@ Polyfill tags if you need them.
 Loading this component.
 
 ```
-<script type="module" src="https://unpkg.com/grilled-cheese@latest/dist/grilled-cheese.js"></script>
+<script type="module" src="https://unpkg.com/nutmeg-grilled-cheese@latest/dist/grilled-cheese.js"></script>
 
 ```
 
 Usage
 ----
 
+Grilled cheese sandwiches default to a quantity of 1 with cheddar. You can get pickles on them (I know...that's technically a melt) and change the types of cheese to include.
+
 ```
-  <grilled-cheese cheese="Some value"></grilled-cheese>
+  <grilled-cheese></grilled-cheese>
 
-  <grilled-cheese pickles="Some value"></grilled-cheese>
+  <grilled-cheese pickles></grilled-cheese>
 
-  <grilled-cheese quantity="Some value"></grilled-cheese>
+  <grilled-cheese quantity="5"></grilled-cheese>
 
-  <grilled-cheese>Slot content</grilled-cheese>
+  <script>
+    document.querySelector('grilled-cheese').cheese = ['cheddar', 'blue'];
+  </script>
 ```
 
 License

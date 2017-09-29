@@ -1,7 +1,8 @@
 import { html, render, TemplateResult } from 'lit-html';
+import { repeat } from 'lit-html/lib/repeat';
 
 export class GrilledCheese extends HTMLElement {
-  public cheese: string[] = [];
+  public cheese: string[] = ['cheddar'];
 
   constructor() {
     super();
@@ -39,7 +40,7 @@ export class GrilledCheese extends HTMLElement {
     if (this.hasAttribute('quantity')) {
       return Number(this.getAttribute('quantity'));
     } else {
-      return null;
+      return 1;
     }
   }
 
@@ -68,22 +69,28 @@ export class GrilledCheese extends HTMLElement {
           color: #212121;
           padding: 16px;
         }
+
+        ul {
+          list-style: none;
+        }
       </style>
     `;
+  }
+
+  private get sandwich(): TemplateResult {
+    return html`
+      🍞${repeat(this.cheese, (i) => i, () => html`🧀`)}${this.pickles ? '🥒' : ''}🍞`;
   }
 
   private get template(): TemplateResult {
     return html`
       ${this.styles}
       <div class="content">
-        Welcome to &lt;grilled-cheese&gt;
-
+        <p>&lt;grilled-cheese&gt;</p>
         <ul>
-          <li>pickles: ${this.pickles === null ? 'N/A' : this.pickles}</li>
-          <li>quantity: ${this.quantity === null ? 'N/A' : this.quantity}</li>
+          ${repeat(new Array(this.quantity), (i) => i, () => html`
+            <li>${this.sandwich}</li>`)}
         </ul>
-
-        <slot></slot>
       </div>
     `;
   }

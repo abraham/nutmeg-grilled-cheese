@@ -1,7 +1,7 @@
 {
-  "name": "grilled-cheese",
+  "name": "nutmeg-grilled-cheese",
   "version": "0.1.0",
-  "description": "Generated Nutmeg Web Component",
+  "description": "Add an Emoji grilled cheese sandwich to your site",
   "main": "dist/grilled-cheese.js",
   "types": "dist/grilled-cheese.d.ts",
   "directories": {

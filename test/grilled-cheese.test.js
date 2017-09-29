@@ -33,20 +33,6 @@ describe('<grilled-cheese>', () => {
     fixture.cleanup()
   });
 
-  describe('slot', () => {
-    beforeEach(() => {
-      component = fixture.load(fixturePath)[FIXTURES.SLOT];
-    });
-
-    it('name is rendered', () => {
-      // Firefox has different output so testing for inclusion instead of exact match.
-      const slot = component.shadowRoot.querySelector('slot');
-      expect(slot.assignedNodes()[0].wholeText).to.include(DEFAULTS.STRING);
-      // TODO: Switch to simpler test when Firefox is no longer polyfilled.
-      // expect(component.innerText).equal('Cat');
-    });
-  });
-
   describe('--grilled-cheese-background-color', () => {
     describe('with default', () => {
       beforeEach(() => {
@@ -89,7 +75,7 @@ describe('<grilled-cheese>', () => {
         });
 
         it('is rendered in shadowRoot', () => {
-          expect(component.shadowRoot.querySelector('.content').innerText).to.include(`pickles: true`);
+          expect(component.shadowRoot.querySelector('.content').innerText).to.include(`🥒`);
         });
       });
 
@@ -107,7 +93,7 @@ describe('<grilled-cheese>', () => {
         });
 
         it('is rendered in shadowRoot', () => {
-          expect(component.shadowRoot.querySelector('.content').innerText).to.include(`pickles: false`);
+          expect(component.shadowRoot.querySelector('.content').innerText).to.not.include(`🥒`);
         });
       });
     });
@@ -127,7 +113,7 @@ describe('<grilled-cheese>', () => {
         });
 
         it('is rendered in shadowRoot', () => {
-          expect(component.shadowRoot.querySelector('.content').innerText).to.include(`pickles: true`);
+          expect(component.shadowRoot.querySelector('.content').innerText).to.include('🥒');
         });
       });
 
@@ -145,7 +131,7 @@ describe('<grilled-cheese>', () => {
         });
 
         it('is rendered in shadowRoot', () => {
-          expect(component.shadowRoot.querySelector('.content').innerText).to.include(`pickles: false`);
+          expect(component.shadowRoot.querySelector('.content').innerText).to.not.include('🥒');
         });
       });
     });
@@ -171,7 +157,7 @@ describe('<grilled-cheese>', () => {
         });
 
         it('is rendered in shadowRoot', () => {
-          expect(component.shadowRoot.querySelector('.content').innerText).to.include(`quantity: ${DEFAULTS.NUMBER}`);
+          expect(component.shadowRoot.querySelector('.content').querySelectorAll('li').length).equal(DEFAULTS.NUMBER);
         });
       });
 
@@ -181,7 +167,7 @@ describe('<grilled-cheese>', () => {
         });
 
         it('is gettable', () => {
-          expect(component.quantity).equal(null);
+          expect(component.quantity).equal(1);
         });
 
         it('is not reflected to attribute', () => {
@@ -189,7 +175,7 @@ describe('<grilled-cheese>', () => {
         });
 
         it('is not rendered in shadowRoot', () => {
-          expect(component.shadowRoot.querySelector('.content').innerText).to.include(`quantity: N/A`);
+          expect(component.shadowRoot.querySelector('.content').querySelectorAll('li').length).equal(1);
         });
       });
     });
@@ -209,7 +195,7 @@ describe('<grilled-cheese>', () => {
         });
 
         it('is rendered in shadowRoot', () => {
-          expect(component.shadowRoot.querySelector('.content').innerText).to.include(`quantity: ${DEFAULTS.NUMBER}`);
+          expect(component.shadowRoot.querySelector('.content').querySelectorAll('li').length).equal(DEFAULTS.NUMBER);
         });
       });
 
@@ -219,7 +205,7 @@ describe('<grilled-cheese>', () => {
         });
 
         it('is gettable', () => {
-          expect(component.quantity).equal(null);
+          expect(component.quantity).equal(1);
         });
 
         it('is not reflected to attribute', () => {
@@ -227,7 +213,7 @@ describe('<grilled-cheese>', () => {
         });
 
         it('is not rendered in shadowRoot', () => {
-          expect(component.shadowRoot.querySelector('.content').innerText).to.include(`quantity: N/A`);
+          expect(component.shadowRoot.querySelector('.content').querySelectorAll('li').length).equal(1);
         });
       });
     });

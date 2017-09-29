@@ -16,6 +16,11 @@
       padding: 24px;
     }
 
+    #content {
+      margin: 0 auto;
+      width: 256px;
+    }
+
     grilled-cheese {
       margin: 8px;
     }
@@ -26,12 +31,17 @@
   </style>
 </head>
 <body>
-  <grilled-cheese></grilled-cheese>
+  <div id="content">
+    <grilled-cheese id="five-cheese"></grilled-cheese>
 
-  <grilled-cheese pickles="Pickle" quantity="Pickle"></grilled-cheese>
+    <grilled-cheese pickles quantity="5"></grilled-cheese>
+  </div>
 
-  <grilled-cheese>Slot content</grilled-cheese>
-
-  <grilled-cheese class="blue"></grilled-cheese>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelector('#five-cheese').cheese = ['cheddar', 'gouda', 'parmesan', 'havarti', 'asiago'];
+      document.querySelector('#five-cheese').render();
+    });
+  </script>
 </body>
 </html>
