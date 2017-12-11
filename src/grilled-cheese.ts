@@ -1,27 +1,39 @@
 import { html, render, TemplateResult } from 'lit-html';
 import { repeat } from 'lit-html/lib/repeat';
 
-export class GrilledCheese extends HTMLElement {
+export default class GrilledCheese extends HTMLElement {
   public cheese: string[] = ['cheddar'];
+  /** The constructor always attaches a shadowRoot so no need for it to be null. */
+  public shadowRoot: ShadowRoot;
 
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
   }
 
+  /** The element instance has been inserted into the DOM. */
+  connectedCallback() {
+    this.upgradeProperties();
+    this.render();
+  }
+
+  /** The element instance has been removed from the DOM. */
+  disconnectedCallback() {
+  }
+
+  /** Watch for changes to these attributes. */
   static get observedAttributes(): string[] {
     return ['pickles', 'quantity'];
   }
 
-  connectedCallback() {
-    this.render();
-  }
-
-  disconnectedCallback() {
-  }
-
+  /** Rerender when the observed attributes change. */
   attributeChangedCallback(_name: string, _oldValue: any, _newValue: any) {
     this.render();
+  }
+
+  /** Rerender the element. */
+  render() {
+    render(this.template, this.shadowRoot);
   }
 
   get pickles(): boolean {
@@ -52,6 +64,18 @@ export class GrilledCheese extends HTMLElement {
     }
   }
 
+  /** Support lazy properties https://developers.google.com/web/fundamentals/web-components/best-practices#lazy-properties */
+  private upgradeProperties() {
+    (<any>this).constructor['observedAttributes'].forEach((prop: string) => {
+      if (this.hasOwnProperty(prop)) {
+        let value = (<any>this)[prop];
+        delete (<any>this)[prop];
+        (<any>this)[prop] = value;
+      }
+    });
+  }
+
+  /** Styling for the element. */
   private get styles(): TemplateResult {
     return html`
       <style>
@@ -82,21 +106,21 @@ export class GrilledCheese extends HTMLElement {
       🍞${repeat(this.cheese, (i) => i, () => html`🧀`)}${this.pickles ? '🥒' : ''}🍞`;
   }
 
+  /** HTML Template for the element. */
   private get template(): TemplateResult {
     return html`
       ${this.styles}
       <div class="content">
         <p>&lt;grilled-cheese&gt;</p>
+
         <ul>
           ${repeat(new Array(this.quantity), (i) => i, () => html`
             <li>${this.sandwich}</li>`)}
         </ul>
+
+        <slot></slot>
       </div>
     `;
-  }
-
-  render() {
-    render(this.template, this.shadowRoot);
   }
 }
 

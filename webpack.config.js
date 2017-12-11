@@ -1,24 +1,28 @@
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const path = require('path');
+const name = 'grilled-cheese';
 
 module.exports = {
-  entry: './src/grilled-cheese.ts',
-  module: {
-    rules: [{
-        test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: /node_modules/,
-      },
-      {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
-      },
-    ],
-  },
-  resolve: {
-    extensions: ['.tsx', '.ts', '.js'],
+  devtool: 'source-map',
+  entry: {
+    [`${name}.bundled`]: path.resolve(__dirname, 'dist', `${name}.js`),
+    [`${name}.min`]: path.resolve(__dirname, 'dist', `${name}.js`),
   },
   output: {
-    filename: 'grilled-cheese.js',
+    filename: '[name].js',
     path: path.resolve(__dirname, 'dist'),
+  },
+  plugins: [
+    new UglifyJsPlugin({
+      include: /\.min\.js$/,
+      parallel: true,
+      sourceMap: true,
+      uglifyOptions: {
+        ecma: 7,
+      },
+    }),
+  ],
+  resolve: {
+    extensions: ['.js'],
   },
 };
